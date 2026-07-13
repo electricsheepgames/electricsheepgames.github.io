@@ -105,16 +105,6 @@
       margin-top: 0.3em;
     }
 
-    .fallback-note {
-      font-size: clamp(0.875rem, 2vw, 1.05rem);
-      opacity: 0.6;
-    }
-
-    .fallback-note a {
-      color: inherit;
-      font-weight: 700;
-    }
-
     footer {
       padding-block: 1.75rem;
       border-top: 1px solid;
@@ -143,58 +133,30 @@
       <p>One-shot prompted games.</p>
     </header>
     <nav aria-label="Games">
-      <ul></ul>
-      <noscript>
-        <p class="fallback-note">The game list needs JavaScript to load. You can browse everything on <a href="https://github.com/electricsheepgames">GitHub</a> instead.</p>
-      </noscript>
+      <ul>
+        <li>
+          <a href="https://adarkterminal.electricsheep.games">
+            <span class="game-name">ADarkTerminal</span>
+            <span class="game-tagline">Fable 5 | Based on the open source Godot game A Dark Forest, build an incremental game spinoff that takes place in a terminal and follows Steve Yegge's 8 levels of AI development. The player begins with manually "writing" "merging" and "shipping" code (all via click), then upgrades through the levels of AI development.</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://mythicpull.electricsheep.games">
+            <span class="game-name">MythicPull</span>
+            <span class="game-tagline">Fable 5 | Create a web app with a polished and extensible UI for opening a pack of magic the gathering cards. This should very closely resemble the level of polish of the Pokemon TCG Pocket mobile app's pack "cracking" experience. Use the high resolution card images from the Scryfall API. You'll also need to find out where to grab high res booster pack art. Don't worry about the accuracy of the exact packs/sets/rarities/card contents--we can build that separately--just use a sample of 15 cards and a single pack art for now. The UI/UX end goal is a screen similar to the one in Pokemon TCG Pocket where you can use mouse/touch controls to spin a pack 360 and pull across the top of the card to "tear" it open, then the contents fan out and you can tap to go through them, as well as drag on the screen to slightly alter perspective as if wobbling a card in real life. Include holographic effects and demo on one card. Include card back art. The UI should have some minimal menu/buttons for choosing (future) additional packs by set.</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://electricsheep.games/WordSalad">
+            <span class="game-name">WordSalad</span>
+            <span class="game-tagline">Fable 5 | Build a 3x3 tile word-building game that plays like WordBrain with swiping in order to form words from adjacent letters, except above the 3x3 is a faded 5x3 (height x width) area of tiles that will be “falling down” to fill the ones that disappear when making a word with them. It’s a mix of wordbrain and Tetris and the tiles all have colors that give point multiplier bonuses when 2 or more match in a word. You can “reuse” a letter non-consecutively multiple times in a word by swiping over it, but each time you do you lose “health” from your health bar. Each “level” requires an increasing number of words to beat, and at the end of a level/between levels there is a store of lifelines (clear all, clear a row, scramble, choose one letter, full heal, increase max health, etc.) you can purchase with points earned. The game has a colorful pastel aesthetic.</span>
+          </a>
+        </li>
+      </ul>
     </nav>
   </main>
-  <footer><a href="https://github.com/electricsheepgames">GitHub</a></footer>
-  <script>
-    fetch('games.json')
-      .then((response) => response.json())
-      .then((config) => {
-        document.querySelector('header h1').textContent = config.title;
-        document.querySelector('header p').textContent = config.tagline;
-
-        const list = document.querySelector('nav ul');
-        for (const game of config.games) {
-          const li = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = game.url;
-
-          const name = document.createElement('span');
-          name.className = 'game-name';
-          name.textContent = game.name;
-
-          const tagline = document.createElement('span');
-          tagline.className = 'game-tagline';
-          tagline.textContent = game.description;
-
-          a.append(name, tagline);
-          li.append(a);
-          list.append(li);
-        }
-
-        const footer = document.querySelector('footer');
-        footer.replaceChildren();
-        for (const link of config.footerLinks) {
-          const a = document.createElement('a');
-          a.href = link.url;
-          a.textContent = link.label;
-          footer.append(a);
-        }
-      })
-      .catch(() => {
-        const note = document.createElement('p');
-        note.className = 'fallback-note';
-        note.append('The game list failed to load. You can browse everything on ');
-        const a = document.createElement('a');
-        a.href = 'https://github.com/electricsheepgames';
-        a.textContent = 'GitHub';
-        note.append(a, ' instead.');
-        document.querySelector('nav').append(note);
-      });
-  </script>
+  <footer>
+    <a href="https://github.com/electricsheepgames">GitHub</a>
+  </footer>
 </body>
 </html>
