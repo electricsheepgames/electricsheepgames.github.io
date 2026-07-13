@@ -129,22 +129,48 @@
 <body>
   <main>
     <header>
-      <h1>Electric Sheep</h1>
-      <p>One-shot prompted games.</p>
+      <h1></h1>
+      <p></p>
     </header>
     <nav aria-label="Games">
-      <ul>
-        <li>
-          <a href="https://adarkterminal.electricsheep.games">
-            <span class="game-name">ADarkTerminal</span>
-            <span class="game-tagline">Fable 5 | Based on the open source Godot game A Dark Forest, build an incremental game spinoff that takes place in a terminal and follows Steve Yegge's 8 levels of AI development. The player begins with manually "writing" "merging" and "shipping" code (all via click), then upgrades through the levels of AI development.</span>
-          </a>
-        </li>
-      </ul>
+      <ul></ul>
     </nav>
   </main>
-  <footer>
-    <a href="https://github.com/electricsheepgames">GitHub</a>
-  </footer>
+  <footer></footer>
+  <script>
+    fetch('games.json')
+      .then((response) => response.json())
+      .then((config) => {
+        document.querySelector('header h1').textContent = config.title;
+        document.querySelector('header p').textContent = config.tagline;
+
+        const list = document.querySelector('nav ul');
+        for (const game of config.games) {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = game.url;
+
+          const name = document.createElement('span');
+          name.className = 'game-name';
+          name.textContent = game.name;
+
+          const tagline = document.createElement('span');
+          tagline.className = 'game-tagline';
+          tagline.textContent = game.description;
+
+          a.append(name, tagline);
+          li.append(a);
+          list.append(li);
+        }
+
+        const footer = document.querySelector('footer');
+        for (const link of config.footerLinks) {
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.textContent = link.label;
+          footer.append(a);
+        }
+      });
+  </script>
 </body>
 </html>
