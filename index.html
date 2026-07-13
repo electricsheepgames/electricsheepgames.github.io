@@ -105,6 +105,16 @@
       margin-top: 0.3em;
     }
 
+    .fallback-note {
+      font-size: clamp(0.875rem, 2vw, 1.05rem);
+      opacity: 0.6;
+    }
+
+    .fallback-note a {
+      color: inherit;
+      font-weight: 700;
+    }
+
     footer {
       padding-block: 1.75rem;
       border-top: 1px solid;
@@ -129,14 +139,17 @@
 <body>
   <main>
     <header>
-      <h1></h1>
-      <p></p>
+      <h1>Electric Sheep</h1>
+      <p>One-shot prompted games.</p>
     </header>
     <nav aria-label="Games">
       <ul></ul>
+      <noscript>
+        <p class="fallback-note">The game list needs JavaScript to load. You can browse everything on <a href="https://github.com/electricsheepgames">GitHub</a> instead.</p>
+      </noscript>
     </nav>
   </main>
-  <footer></footer>
+  <footer><a href="https://github.com/electricsheepgames">GitHub</a></footer>
   <script>
     fetch('games.json')
       .then((response) => response.json())
@@ -164,12 +177,23 @@
         }
 
         const footer = document.querySelector('footer');
+        footer.replaceChildren();
         for (const link of config.footerLinks) {
           const a = document.createElement('a');
           a.href = link.url;
           a.textContent = link.label;
           footer.append(a);
         }
+      })
+      .catch(() => {
+        const note = document.createElement('p');
+        note.className = 'fallback-note';
+        note.append('The game list failed to load. You can browse everything on ');
+        const a = document.createElement('a');
+        a.href = 'https://github.com/electricsheepgames';
+        a.textContent = 'GitHub';
+        note.append(a, ' instead.');
+        document.querySelector('nav').append(note);
       });
   </script>
 </body>
